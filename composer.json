@@ -12,7 +12,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/App/src/",
-            "Framework\\": "src/Framework/src/"
+            "Framework\\": "src/Framework/src/",
+            "Migrations\\": "src/App/migrations/"
         }
     },
     "config": {
