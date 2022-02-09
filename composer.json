@@ -1,0 +1,10 @@
+{
+    "name": "geffroyr/faux-rhum",
+    "authors": [
+        {
+            "name": "Raphaël Geffroy",
+            "email": "81738559+raphael-geffroy@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
