@@ -26,11 +26,16 @@ final class UrlMatcher
     protected function matchCollection(string $pathinfo, RouteCollection $routes): array
     {
         $trimmedPathinfo = rtrim($pathinfo, '/') ?: '/';
-
         foreach ($routes as $name => $route) {
             $regex = "#^".preg_replace('#{(!)?(\w+)}#', "\w*",$route->getPath())."$#";
             if((bool) preg_match($regex,$trimmedPathinfo)) {
+                $matches = [];
+                preg_match_all("/{(\w+)}/","/coucou/{name}", $matches);
+                $paramsNames = $matches[1];
+                $template = preg_replace('#{(!)?(\w+)}#', "%s",$route->getPath());
+                $params = sscanf($trimmedPathinfo,$template);
                 return [
+                    "parameters" => array_combine($paramsNames, $params),
                     "controller" => $route->getDefault('controller')
                 ];
             }

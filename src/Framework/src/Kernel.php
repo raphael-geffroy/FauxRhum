@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Framework;
 
+use Exception;
 use Framework\Http\NotFoundController;
 use Framework\Http\Request;
 use Framework\Http\Response;
@@ -12,25 +13,31 @@ use Framework\Services\Container;
 
 final class Kernel
 {
-    function handle(Request $request): Response
+    function handle(Request $request, ?string $containerConfigPath = null, ?string $routerConfigPath = null): Response
     {
-        $container = new Container();
-        require_once __DIR__.'/../config/container.php';
+        $container = new Container;
+        if($containerConfigPath !== null){
+            require_once $containerConfigPath;
+        }
 
-        $routes = new RouteCollection();
-        require_once __DIR__.'/../config/routes.php';
+        $routes = new RouteCollection;
+        if($containerConfigPath !== null){
+            require_once $routerConfigPath;
+        }
 
         $matcher = new UrlMatcher($routes);
 
-        $controller = $matcher->match($request->getPathInfo())['controller'] ?? null;
-
-        if($controller === null){
+        try {
+            $matcherResponse = $matcher->match($request->getPathInfo());
+            $controller = $matcherResponse['controller'];
+            $parameters = $matcherResponse['parameters'];
+        } catch (Exception $e) {
             return (new NotFoundController)();
         }
 
         [$className, $methodName] = explode("@", $controller);
         $instance = $container->get($className);
         $callable = [$instance, $methodName];
-        return $callable($request);
+        return $callable($request,...$parameters);
     }
 }
