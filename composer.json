@@ -6,5 +6,11 @@
             "email": "81738559+raphael-geffroy@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App/",
+            "Framework\\": "src/Framework"
+        }
+    }
 }
