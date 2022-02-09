@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Framework;
 
+use Framework\Http\NotFoundController;
 use Framework\Http\Request;
 use Framework\Http\Response;
 use Framework\Routes\RouteCollection;
@@ -21,7 +22,12 @@ final class Kernel
 
         $matcher = new UrlMatcher($routes);
 
-        $controller = $matcher->match($request->getPathInfo())['controller'];
+        $controller = $matcher->match($request->getPathInfo())['controller'] ?? null;
+
+        if($controller === null){
+            return (new NotFoundController)();
+        }
+
         [$className, $methodName] = explode("@", $controller);
         $instance = $container->get($className);
         $callable = [$instance, $methodName];

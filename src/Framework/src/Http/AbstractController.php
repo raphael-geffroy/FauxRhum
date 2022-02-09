@@ -5,7 +5,7 @@ namespace Framework\Http;
 
 abstract class AbstractController
 {
-    function render(string $templatePath, array $params): Response {
+    function render(string $templatePath, array $params = []): Response {
         extract($params);
         ob_start();
         require_once $templatePath;
