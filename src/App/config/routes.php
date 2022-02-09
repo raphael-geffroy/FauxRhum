@@ -1,4 +1,3 @@
 <?php
-/** @var RouteCollection $routes */
-
 use Framework\Routes\RouteCollection;
+/** @var RouteCollection $routes */
