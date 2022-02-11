@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Controller\Article\Category\CreateController as CategoryCreateController;
 use App\Controller\Article\CreateController;
+use App\Controller\Article\ShowController;
 use App\Controller\HelloController;
 use App\Controller\HomeController;
 use App\Controller\LoginController;
@@ -27,9 +28,12 @@ $routes->add('logout', new Route("/logout", [
 $routes->add('hello', new Route("/hello/{name}/{name2}", [
     'controller' => HelloController::class.'@__invoke'
 ]));
-$routes->add('article_create', new Route("/article/create", [
+$routes->add('article_create', new Route("/article", [
     'controller' => CreateController::class.'@__invoke'
 ]));
-$routes->add('category_create', new Route("/category/create", [
+$routes->add('category_create', new Route("/category", [
     'controller' => CategoryCreateController::class.'@__invoke'
+]));
+$routes->add('article_show', new Route("/article/{id}", [
+    'controller' => ShowController::class.'@__invoke'
 ]));

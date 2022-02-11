@@ -142,13 +142,17 @@ final class Article
         return $this;
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function fromArray(array $data): self {
         return (new self)
             ->setId(Uuid::createFromUuid($data['id']))
             ->setTitle($data['title'])
             ->setContent($data['content'])
             ->setAuthorId(Uuid::createFromUuid($data['author_id']))
-            ->setCategoryId($data['category_id']?Uuid::createFromUuid($data['category_id']):null);
+            ->setCategoryId($data['category_id']?Uuid::createFromUuid($data['category_id']):null)
+            ->setCreatedAt(new DateTimeImmutable((string)$data['created_at']));
     }
 
     public function toArray(): array
@@ -158,7 +162,8 @@ final class Article
             'title' => $this->getTitle(),
             'content' => $this->getContent(),
             'author_id'=> $this->getAuthorId()->getId(),
-            'category_id'=> $this->getCategoryId()?->getId()??null
+            'category_id'=> $this->getCategoryId()?->getId()??null,
+            'created_at'=> $this->getCreatedAt()->getTimestamp()
         ];
     }
 

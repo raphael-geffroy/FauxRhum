@@ -7,7 +7,7 @@
 
     /** @var iterable<Article> $articles */
     foreach ($articles as $article) {
-        echo '<li>' . $article->getTitle() . '</li>';
+        echo '<li><a href="/article/'.$article->getId()->getId().'">' . $article->getTitle() . '</a></li>';
     }
     ?>
 </ul>
@@ -18,7 +18,7 @@ foreach ($categories as $category) {
     echo '<h3>' . $category->getName() . '</h3>';
     echo '<ul>';
     foreach ($category->getArticles() as $article) {
-        echo '<li>' . $article->getTitle() . '</li>';
+        echo '<li><a href="/article/'.$article->getId()->getId().'">' . $article->getTitle() . '</a></li>';
     }
     echo '</ul>';
 }

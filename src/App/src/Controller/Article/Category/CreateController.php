@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\Article\Category;
 
 use App\Application\Article\Category\Create\Create;
+use App\Domain\User\CategoryNotFoundException;
 use Framework\Http\AbstractController;
 use Framework\Http\Request;
 use Framework\Http\Response;
@@ -13,7 +14,7 @@ final class CreateController extends AbstractController
 {
     public function __construct(
         private Session $session,
-        private Create   $create
+        private Create $create
     ){
         parent::__construct($session);
     }

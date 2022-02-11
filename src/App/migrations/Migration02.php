@@ -16,6 +16,7 @@ class Migration02 implements MigrationInterface
             ->add('category_id','CHAR(13)', true)
             ->add('title', 'varchar(255)')
             ->add('content', 'text')
+            ->add('created_at', 'TIMESTAMP')
         ;
     }
 }

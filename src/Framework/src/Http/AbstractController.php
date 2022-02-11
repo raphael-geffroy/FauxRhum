@@ -30,4 +30,23 @@ abstract class AbstractController
             $html
         );
     }
+
+    protected function render404(): Response {
+        $session = $this->session;
+        ob_start();
+        if($templatesDir = getenv("TemplatesDir")){
+            if($baseTemplate = getenv("BaseTemplate")){
+                $innerTemplate = __DIR__.'/page404.html.php';
+                require_once $templatesDir.$baseTemplate;
+            }
+            require_once __DIR__.'/page404.html.php';
+        } else {
+            require_once __DIR__.'/page404.html.php';;
+        }
+        $html = ob_get_clean();
+        return new Response(
+            404,
+            $html
+        );
+    }
 }

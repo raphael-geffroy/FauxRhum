@@ -18,7 +18,7 @@ final class PdoArticleRepository implements ArticleRepositoryInterface
 
     public function save(Article $article): void
     {
-        $query = $this->pdo->prepare("INSERT INTO article (id,author_id,category_id,title,content) VALUES (:id, :author_id, :category_id, :title, :content)");
+        $query = $this->pdo->prepare("INSERT INTO article (id,author_id,category_id,title,content, created_at) VALUES (:id, :author_id, :category_id, :title, :content, :created_at)");
         $query->execute($article->toArray());
     }
 
