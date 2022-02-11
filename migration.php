@@ -16,7 +16,7 @@ $logger = new Logger;
 try {
     $pdo->query("select * from migration_status")
         ->execute();
-}catch (PDOException) {
+} catch (PDOException) {
     $sql = (new Plan)->create('migration_status')
         ->add('migration_version','VARCHAR(255)')->getSQL();
     $pdo->query($sql);

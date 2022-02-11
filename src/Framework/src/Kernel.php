@@ -7,22 +7,31 @@ use Exception;
 use Framework\Http\NotFoundController;
 use Framework\Http\Request;
 use Framework\Http\Response;
+use Framework\Http\Session;
 use Framework\Routes\RouteCollection;
 use Framework\Routes\UrlMatcher;
 use Framework\Services\Container;
 
 final class Kernel
 {
-    function handle(Request $request, ?string $containerConfigPath = null, ?string $routerConfigPath = null): Response
+    function handle(
+        Request $request,
+        ?string $configPath = null,
+    ): Response
     {
+        (new Session)->start();
+        if($configPath !== null){
+            require_once $configPath.'env.php';
+        }
+
         $container = new Container;
-        if($containerConfigPath !== null){
-            require_once $containerConfigPath;
+        if($configPath !== null){
+            require_once $configPath.'container.php';
         }
 
         $routes = new RouteCollection;
-        if($containerConfigPath !== null){
-            require_once $routerConfigPath;
+        if($configPath !== null){
+            require_once $configPath.'routes.php';
         }
 
         $matcher = new UrlMatcher($routes);

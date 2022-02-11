@@ -38,7 +38,8 @@ final class PlanRunner
             $migrationNameParts = explode('\\', $migrationName);
             $migrationName = array_pop($migrationNameParts);
 
-            $this->pdo->query("DELETE FROM migration_status; INSERT INTO migration_status SET migration_version = '$migrationName'");
+            $this->pdo->query("DELETE FROM migration_status");
+            $this->pdo->prepare("INSERT INTO migration_status (migration_version) VALUES (:name)")->execute(['name'=>$migrationName]);
         }
 
         $this->logger->log("\nFIN DES MIGRATIONS 👍\n");

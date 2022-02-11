@@ -7,7 +7,8 @@ final class Request
 {
     function __construct(
         private string $pathInfo = "/",
-        private array $params = []
+        private array $params = [],
+        private string $method = "GET"
     ){}
 
     /**
@@ -33,8 +34,26 @@ final class Request
      */
     public function getParam(string $key): ?string
     {
-        return $this->params[$key] ?? null;
+        $param = $this->params[$key] ?? null;
+        return $param !== "" ? $param : null;
     }
 
+    /**
+     * @return string
+     */
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param string $method
+     * @return Request
+     */
+    public function setMethod(string $method): Request
+    {
+        $this->method = $method;
+        return $this;
+    }
 
 }

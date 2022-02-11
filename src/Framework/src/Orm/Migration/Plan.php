@@ -22,9 +22,9 @@ final class Plan
         return $this->do($table, self::MODE_CREATE);
     }
 
-    public function add(string $fieldName, string $type): self {
+    public function add(string $fieldName, string $type, bool $nullable = false): self {
         $fieldName = $this->action === self::MODE_ALTER ? "ADD $fieldName" : $fieldName;
-        $this->fields[$fieldName] = $type . ' NOT NULL';
+        $this->fields[$fieldName] = $nullable? $type : $type. ' NOT NULL';
         return $this;
     }
 
